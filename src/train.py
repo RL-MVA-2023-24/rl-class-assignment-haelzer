@@ -62,7 +62,7 @@ class ProjectAgent:
         self.agent = dqn_agent(config, DQN)
         path = os.getcwd() + "/src/model_ep_1000.pt"
         self.agent.model.load_state_dict(torch.load(path, 
-                                                    map_location= torch.device('gpu')))
+                                                    map_location= torch.device('cpu')))
         
         
 class ReplayBuffer:
