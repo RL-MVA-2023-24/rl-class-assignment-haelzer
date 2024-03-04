@@ -303,6 +303,6 @@ if __name__ == "__main__":
    
     # Train agent
     max_episode_steps=2200
-    ep_length, disc_rewards, tot_rewards, V0 = agent.train(env, max_episode_steps)
-    with open('./src/agents/agent.pkl', 'wb') as f:
-        pickle.dump(agent, f)
+    #ep_length, disc_rewards, tot_rewards, V0 = agent.train(env, max_episode_steps)
+    #with open('./src/agents/agent.pkl', 'wb') as f:
+        #pickle.dump(agent, f)
