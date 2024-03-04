@@ -61,8 +61,7 @@ class ProjectAgent:
         
     def load(self):
         self.agent = dqn_agent(config, DQN)
-        path = os.getcwd() + "/src/model_ep_1000.pt"
-        self.agent.model.load_state_dict(torch.load(path, 
+        self.agent.model.load_state_dict(torch.load("model.pt", 
                                                     map_location= torch.device('cpu')))
         
         
@@ -302,7 +301,7 @@ if __name__ == "__main__":
             agent = pickle.load(f)
    
     # Train agent
-    max_episode_steps=2200
+    #max_episode_steps=2200
     #ep_length, disc_rewards, tot_rewards, V0 = agent.train(env, max_episode_steps)
     #with open('./src/agents/agent.pkl', 'wb') as f:
         #pickle.dump(agent, f)
