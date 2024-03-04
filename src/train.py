@@ -9,7 +9,6 @@ import numpy as np
 import pickle
 import torch.nn as nn
 
-
 env = TimeLimit(
     env=HIVPatient(domain_randomization=False), max_episode_steps=200
 )  # The time wrapper limits the number of steps in an episode at 200.
@@ -25,7 +24,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # Declare network
 state_dim = env.observation_space.shape[0]
 n_action = env.action_space.n 
-nb_neurons= 100
+nb_neurons= 50
 DQN = torch.nn.Sequential(nn.Linear(state_dim, nb_neurons),
                             nn.SELU(),
                             nn.Linear(nb_neurons, 2*nb_neurons),
@@ -56,12 +55,12 @@ class ProjectAgent:
         # Implement your agent here  
         return self.agent.act(observation)
 
-    def save_model(self, path):
+    def save(self, path):
         pass
         
     def load(self):
         self.agent = dqn_agent(config, DQN)
-        path = os.getcwd() + "/src/model.pt"    
+        path = os.getcwd() + "/src/model.pt"
         self.agent.model.load_state_dict(torch.load(path, 
                                                     map_location= torch.device('cpu')))
         
@@ -249,13 +248,13 @@ class dqn_agent:
             
     def save(self, episode):
         print("Saving model, target model and optimizer ")
-        torch.save(self.model.state_dict(), 'models/model_{:e}'.format(episode))
-        torch.save(self.target_model.state_dict(), 'targets/target_model_{:e}'.format(episode))
-        torch.save(self.optimizer.state_dict(), 'optimizers/optimizer_model_{:e}'.format(episode))
+        #torch.save(self.model.state_dict(), 'models/model_{:e}'.format(episode))
+        #torch.save(self.target_model.state_dict(), 'targets/target_model_{:e}'.format(episode))
+        #torch.save(self.optimizer.state_dict(), 'optimizers/optimizer_model_{:e}'.format(episode))
+        #with open('agents/agent_{:e}.pkl'.format(episode), 'wb') as f:
+            #pickle.dump(self, f)
         torch.save(self.model.state_dict(), 'model.pt')
-        with open('agents/agent_{:e}.pkl'.format(episode), 'wb') as f:
-            pickle.dump(self, f)
-        
+
     def load(self, model_path, target_model_path, optimizer_path):
         self.model.load_state_dict(torch.load(model_path))
         self.target_model.load_state_dict(torch.load(target_model_path))
@@ -269,7 +268,7 @@ if __name__ == "__main__":
     # Declare network
     state_dim = env.observation_space.shape[0]
     n_action = env.action_space.n 
-    nb_neurons= 100
+    nb_neurons= 50
     DQN = torch.nn.Sequential(nn.Linear(state_dim, nb_neurons),
                             nn.SELU(),
                             nn.Linear(nb_neurons, 2*nb_neurons),
@@ -303,7 +302,7 @@ if __name__ == "__main__":
             agent = pickle.load(f)
    
     # Train agent
-    #max_episode_steps=400
+    #max_episode_steps=2200
     #ep_length, disc_rewards, tot_rewards, V0 = agent.train(env, max_episode_steps)
     #with open('./src/agents/agent.pkl', 'wb') as f:
         #pickle.dump(agent, f)
