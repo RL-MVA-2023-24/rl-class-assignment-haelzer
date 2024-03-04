@@ -25,7 +25,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # Declare network
 state_dim = env.observation_space.shape[0]
 n_action = env.action_space.n 
-nb_neurons= 100
+nb_neurons= 50
 DQN = torch.nn.Sequential(nn.Linear(state_dim, nb_neurons),
                             nn.SELU(),
                             nn.Linear(nb_neurons, 2*nb_neurons),
@@ -268,7 +268,7 @@ if __name__ == "__main__":
     # Declare network
     state_dim = env.observation_space.shape[0]
     n_action = env.action_space.n 
-    nb_neurons= 100
+    nb_neurons= 50
     DQN = torch.nn.Sequential(nn.Linear(state_dim, nb_neurons),
                             nn.SELU(),
                             nn.Linear(nb_neurons, 2*nb_neurons),
