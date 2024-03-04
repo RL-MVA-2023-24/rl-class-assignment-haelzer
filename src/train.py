@@ -61,7 +61,7 @@ class ProjectAgent:
         
     def load(self):
         self.agent = dqn_agent(config, DQN)
-        path = os.getcwd() + "/model.pt"
+        path = os.getcwd() + "/src/model.pt"    
         self.agent.model.load_state_dict(torch.load(path, 
                                                     map_location= torch.device('cpu')))
         
