@@ -60,7 +60,8 @@ class ProjectAgent:
         
     def load(self):
         self.agent = dqn_agent(config, DQN)
-        self.agent.model.load_state_dict(torch.load("model.pt", 
+        path = os.getcwd() + "/src/model.pt"
+        self.agent.model.load_state_dict(torch.load(path, 
                                                     map_location= torch.device('cpu')))
         
         
@@ -247,12 +248,13 @@ class dqn_agent:
             
     def save(self, episode):
         print("Saving model, target model and optimizer ")
-        torch.save(self.model.state_dict(), 'models/model_{:e}'.format(episode))
-        torch.save(self.target_model.state_dict(), 'targets/target_model_{:e}'.format(episode))
-        torch.save(self.optimizer.state_dict(), 'optimizers/optimizer_model_{:e}'.format(episode))
-        with open('agents/agent_{:e}.pkl'.format(episode), 'wb') as f:
-            pickle.dump(self, f)
-        
+        #torch.save(self.model.state_dict(), 'models/model_{:e}'.format(episode))
+        #torch.save(self.target_model.state_dict(), 'targets/target_model_{:e}'.format(episode))
+        #torch.save(self.optimizer.state_dict(), 'optimizers/optimizer_model_{:e}'.format(episode))
+        #with open('agents/agent_{:e}.pkl'.format(episode), 'wb') as f:
+            #pickle.dump(self, f)
+        torch.save(self.model.state_dict(), 'model.pt')
+
     def load(self, model_path, target_model_path, optimizer_path):
         self.model.load_state_dict(torch.load(model_path))
         self.target_model.load_state_dict(torch.load(target_model_path))
